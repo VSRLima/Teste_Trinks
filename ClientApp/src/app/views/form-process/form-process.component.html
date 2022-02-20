@@ -1,0 +1,51 @@
+
+<mat-card class="example-card">
+  <mat-card-header>
+    <mat-card-title *ngIf="!edit">Novo Processo</mat-card-title>
+    <mat-card-title *ngIf="edit">Editar Processo</mat-card-title>
+    <!-- <mat-card-subtitle *ngIf="edit">ID: {{process.id}}</mat-card-subtitle> -->
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="processForm" (ngSubmit)="saveProcess()" novalidate>
+      <mat-form-field appearance="fill">
+        <mat-label>Número do Processo</mat-label>
+        <input matInput formControlName="processName">
+        <!-- <mat-error *ngIf="validFields('processName')">Número do Processo está inválido</mat-error> -->
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Estado (Sigla)</mat-label>
+        <input matInput formControlName="state">
+        <!-- <mat-error *ngIf="validFields('state')">O estado digitado está inválido</mat-error> -->
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Valor</mat-label>
+        <input matInput formControlName="monetaryValue">
+        <!-- <mat-error *ngIf="validFields('monetaryValue')">O valor digitado está inválido</mat-error> -->
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>startDate</mat-label>
+        <input matInput formControlName="startDate">
+        <!-- <mat-error *ngIf="validFields('startDate')">O valor digitado está inválido</mat-error> -->
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>clientId</mat-label>
+        <input matInput formControlName="clientId">
+        <!-- <mat-error *ngIf="validFields('clientId')">O valor digitado está inválido</mat-error> -->
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Estado do Processo (Sigla)</mat-label>
+        <input matInput formControlName="processState">
+        <!-- <mat-error *ngIf="validFields('processState')">O estado digitado está inválido</mat-error> -->
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button>LIKE</button>
+    <button mat-button>SHARE</button>
+  </mat-card-actions>
+</mat-card>
