@@ -22,6 +22,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   ModalComponent
   ],
   entryComponents: [
+    ModalComponent
   ]
 })
 export class SharedModule { }

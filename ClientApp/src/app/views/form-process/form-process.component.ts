@@ -90,7 +90,7 @@ export class FormProcessComponent implements OnInit {
     this.process.id = 0;
     this.process.active = this.processForm.get('active').value;
     this.process.processNumber = this.processForm.get('processNumber').value;
-    this.process.state = this.processForm.get('state').value;
+    this.process.state = this.processForm.get('state').value.toUpperCase();
     this.process.monetaryValue = this.processForm.get('monetaryValue').value;
     this.process.startDate = this.processForm.get('startDate').value;
     this.process.clientId = this.processForm.get('clientId').value;
@@ -115,7 +115,7 @@ export class FormProcessComponent implements OnInit {
   public update() {
     this.process.active = this.processForm.get('active').value;
     this.process.processNumber = this.processForm.get('processNumber').value;
-    this.process.state = this.processForm.get('state').value;
+    this.process.state = this.processForm.get('state').value.toUpperCase();
     this.process.monetaryValue = this.processForm.get('monetaryValue').value;
     this.process.startDate = this.processForm.get('startDate').value;
     this.process.clientId = this.processForm.get('clientId').value;
