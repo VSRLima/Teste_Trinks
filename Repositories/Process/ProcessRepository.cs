@@ -55,9 +55,9 @@ namespace Teste_Trinks.Repositories
             try
             {
                 float resultSum = 0;
-                List<float> monetaryValues = context.Process.Select(el => el.MonetaryValue).ToList<float>();
+                List<float> monetaryValues = context.Process.Where(el => el.Active == true).Select(el => el.MonetaryValue).ToList<float>();
 
-                if (monetaryValues != null)
+                if (monetaryValues.Count != 0)
                 {
                     foreach (var item in monetaryValues)
                     {

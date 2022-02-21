@@ -52,16 +52,8 @@ export class ProcessService {
   }
 
   public insert(process: Process): Observable<any> {
-    var processa = {
-      id: process.id,
-      active: process.active == null ? false : process.active,
-      processNumber: process.processNumber,
-      state: process.state,
-      monetaryValue: process.monetaryValue,
-      startDate: process.startDate,
-      clientId: 1
-    }
-    return this.http.post(`${environment.baseAPI}/api/process/Insert`, processa);
+
+    return this.http.post(`${environment.baseAPI}/api/process/Insert`, process);
   }
 
   public update(process: Process): Observable<any> {

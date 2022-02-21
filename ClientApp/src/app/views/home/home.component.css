@@ -10,6 +10,16 @@
   display: inline-block;
 }
 
-.btn {
-  width: 5px;
+.material-icons {
+  font-size: 19px;
+}
+
+.inputs {
+  border: none;
+  text-decoration: none;
+}
+
+.mat-card {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }

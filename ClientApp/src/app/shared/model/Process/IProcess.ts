@@ -6,5 +6,4 @@ export interface IProcess
   state: string;
   monetaryValue: number;
   startDate : Date;
-  clientName: string;
 }

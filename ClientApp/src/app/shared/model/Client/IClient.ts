@@ -1,7 +1,7 @@
 export interface IClient
 {
   id: number;
-  Name: string;
+  name: string;
   cnpj: string;
   state: string;
 }

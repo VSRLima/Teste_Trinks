@@ -1,19 +1,24 @@
-<div class="modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p>Modal body text goes here.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Save changes</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
+<h1 mat-dialog-title>Novo Cliente</h1>
+<div mat-dialog-content class="mat-typography">
+  <form [formGroup]="clientForm" novalidate>
+    <mat-form-field appearance="fill">
+      <mat-label>Nome</mat-label>
+      <input matInput formControlName="name">
+      <mat-error *ngIf="validFields('name')">Número do Processo está inválido</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>CNPJ</mat-label>
+      <input matInput formControlName="cnpj" type="text">
+      <mat-error *ngIf="validFields('cnpj')">Número do Processo está inválido</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Estado (Sigla)</mat-label>
+      <input matInput formControlName="state">
+      <mat-error *ngIf="validFields('state')">Número do Processo está inválido</mat-error>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="insertClient()" [disabled]="!clientForm.valid">Criar</button>
+  <button mat-button (click)="closeModal()">Cancelar e Fechar</button>
 </div>

@@ -33,7 +33,7 @@
 
       <mat-form-field appearance="fill">
         <mat-label>Nome do Cliente</mat-label>
-        <mat-select [(value)]="clientId">
+        <mat-select formControlName="clientId">
           <mat-option *ngFor="let client of clients" [value]="client.id">
             {{client.name}}
           </mat-option>
@@ -43,28 +43,9 @@
     </form>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-raised-button color="primary" (click)="saveProcess()">Criar</button>
+    <button mat-raised-button color="primary" (click)="saveProcess()" [disabled]="!processForm.valid">Criar</button>
     <button mat-raised-button color="secondary" (click)="goToHome()">Cancelar e Voltar</button>
     <button mat-raised-button color="primary" (click)="showModal()"><span class="material-icons">add</span> Adicionar Novo Cliente</button>
   </mat-card-actions>
 </mat-card>
-<div class="modal" tabindex="-1" role="dialog" *ngIf="showModalClient">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p>Modal body text goes here.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Save changes</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
 

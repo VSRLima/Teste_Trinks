@@ -7,6 +7,8 @@ import { Process } from 'src/app/shared/model/Process/Process';
 import { ProcessService } from 'src/app/shared/services/Process/process.service';
 import { Client } from 'src/app/shared/model/Client/Client';
 import { ClientService } from 'src/app/shared/services/Client/client.service';
+import {MatDialog} from '@angular/material/dialog';
+import { ModalComponent } from 'src/app/shared/modal/modal.component';
 
 
 @Component({
@@ -28,15 +30,14 @@ export class FormProcessComponent implements OnInit {
   public clients: Client[];
   public clientId: number;
 
-  public showModalClient: boolean = false;
-
   constructor(
     public formBuilder: FormBuilder,
     public processService: ProcessService,
     public router: Router,
     protected route: ActivatedRoute,
     public sweetAlert: SweetAlert,
-    public clientService: ClientService
+    public clientService: ClientService,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -46,20 +47,19 @@ export class FormProcessComponent implements OnInit {
       state: [null, [Validators.required, Validators.maxLength(2)]],
       monetaryValue: [null, Validators.required],
       startDate : [null, Validators.required],
-      clientId: [null, Validators.required],
-      processState: [null, [Validators.required, Validators.maxLength(2)]],
+      clientId: [null, Validators.required]
     });
 
     this.getAllClients();
 
     if (this.router.url === '/newProcess') {
+      this.processForm.controls['active'].setValue(true);
       this.edit = false;
     } else {
       this.edit = true;
 
       const param = this.route.snapshot.paramMap.get('id');
 
-      console.log("param", param)
       const processId: any = param;
 
       if (this.processGetByIdSubscription) {
@@ -76,7 +76,6 @@ export class FormProcessComponent implements OnInit {
         this.processForm.controls['monetaryValue'].setValue(process.monetaryValue);
         this.processForm.controls['startDate'].setValue(process.startDate.toString().slice(0, process.startDate.toString().indexOf('T')));
         this.processForm.controls['clientId'].setValue(process.clientId);
-        this.clientId = process.clientId;
       })
     }
   }
@@ -88,7 +87,6 @@ export class FormProcessComponent implements OnInit {
   }
 
   public insertProcess() {
-    console.log("process", this.process)
     this.process.id = 0;
     this.process.active = this.processForm.get('active').value;
     this.process.processNumber = this.processForm.get('processNumber').value;
@@ -104,7 +102,7 @@ export class FormProcessComponent implements OnInit {
 
     this.processInsertSubscription = this.processService.insert(this.process).subscribe(response => {
       this.sweetAlert.ShowAlert("Sucesso!", "O processo foi criado com sucesso!", "success");
-      this.router.navigate(["/home"]);
+      window.history.back();
     },
     error => {
       this.sweetAlert.ShowAlert("Erro!", "O processo não foi criado, por gentileza tente novamente!", "error");
@@ -140,12 +138,11 @@ export class FormProcessComponent implements OnInit {
   }
 
   public saveProcess() {
-    console.log("process", this.processForm.invalid)
-    // if(this.edit) {
-    //   this.update();
-    // } else {
-    //   this.insertProcess();
-    // }
+    if(this.edit) {
+      this.update();
+    } else {
+      this.insertProcess();
+    }
   }
 
   public validFields(field: string) {
@@ -159,8 +156,11 @@ export class FormProcessComponent implements OnInit {
   }
 
   public showModal() {
-    console.log("teste", this.showModalClient)
-    this.showModalClient = !this.showModalClient;
+    const dialogRef = this.dialog.open(ModalComponent);
+
+    dialogRef.afterClosed().subscribe(response => {
+      this.getAllClients();
+    })
   }
 
   ngOnDestroy(): void {

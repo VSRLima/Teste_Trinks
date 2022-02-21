@@ -59,7 +59,7 @@ namespace Teste_Trinks.Controllers
         }
 
         [HttpPost("Insert")]
-        public IActionResult Insert(Client client)
+        public IActionResult Insert([FromBody] Client client)
         {
             try
             {

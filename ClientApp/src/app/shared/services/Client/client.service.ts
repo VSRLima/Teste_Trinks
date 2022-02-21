@@ -22,6 +22,7 @@ export class ClientService {
   }
 
   public insert(client: Client): Observable<any> {
+    console.log("aaa", client)
     return this.http.post(`${environment.baseAPI}/api/client/Insert`, client);
   }
 
