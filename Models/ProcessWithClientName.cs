@@ -2,7 +2,7 @@ using System;
 
 namespace Teste_Trinks.Models
 {
-    public partial class Process : IProcess
+    public class ProcessWithClientName : IProcess 
     {
         public int Id { get; set; }
         public bool Active { get; set; }
@@ -11,6 +11,7 @@ namespace Teste_Trinks.Models
         public float MonetaryValue { get; set; }
         public DateTime StartDate { get; set;}
         public int ClientId { get; set; }
+        public string ClientName {get; set;}
 
         public virtual Client Client { get; set; }
     }

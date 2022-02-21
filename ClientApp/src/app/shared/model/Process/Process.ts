@@ -8,6 +8,6 @@ export class Process implements IProcess
   public state: string;
   public monetaryValue: number;
   public startDate : Date;
+  public clientName: string;
   public clientId: number;
-  public processState: string;
 }

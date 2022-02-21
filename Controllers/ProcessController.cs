@@ -12,19 +12,23 @@ namespace Teste_Trinks.Controllers
 {
     [Produces("application/json")]
     [Route("api/process")]
-    public class ProcessController : Controller, IDisposable
+    public class ProcessController : Controller
     {
-        private readonly IProcessRepository iProcessRepo;
         private readonly ProcessContext processContext;
+
+        public ProcessController(ProcessContext processContext) {
+            this.processContext = processContext;
+        }
 
         [HttpGet("GetAllProcess")]
         public IActionResult GetAllProcess()
         {
             try
             {
-               List<Process> processes = iProcessRepo.GetAllProcess(); 
+                IProcessRepository<Process> processRepo = processContext.GetProcessRepository();
+                List<ProcessWithClientName> processes = processRepo.GetAllProcess(); 
 
-               if(processes.Count > 0)
+                if(processes.Count > 0)
                     return Ok(processes); 
 
                 return BadRequest("Não há nenhum processo registrado");
@@ -41,18 +45,19 @@ namespace Teste_Trinks.Controllers
         {
             try
             {
-               Process process = iProcessRepo.GetById(processId); 
+                IProcessRepository<Process> processRepo = processContext.GetProcessRepository();
+                Process process = processRepo.GetById(processId); 
 
-               if(process != null)
-                    return Ok(process); 
+                if(process != null)
+                        return Ok(process); 
 
-                return BadRequest("Processo requisitado não existe");
+                    return BadRequest("Processo requisitado não existe");
 
-            }
-            catch (System.Exception)
-            {
-                throw;
-            }
+                }
+                catch (System.Exception)
+                {
+                    throw;
+                }
         }
 
         [HttpGet("SumAllActiveProcess")]
@@ -60,18 +65,19 @@ namespace Teste_Trinks.Controllers
         {
             try
             {
-               float value = iProcessRepo.SumAllActiveProcess(); 
+                IProcessRepository<Process> processRepo = processContext.GetProcessRepository();
+                float value = processRepo.SumAllActiveProcess(); 
 
-               if(value != 0 || value != 0.0)
-                    return Ok(value); 
+                if(value != 0 || value != 0.0)
+                        return Ok(value); 
 
-                return BadRequest("Não há processos ativos suficientes para fazer o cálculo");
+                    return BadRequest("Não há processos ativos suficientes para fazer o cálculo");
 
-            }
-            catch (System.Exception)
-            {
-                throw;
-            }
+                }
+                catch (System.Exception)
+                {
+                    throw;
+                }
         }
 
         [HttpGet("SumActiveProcessByClient/{clientId}")]
@@ -79,18 +85,19 @@ namespace Teste_Trinks.Controllers
         {
             try
             {
-               float value = iProcessRepo.SumActiveProcessByClient(clientId); 
+                IProcessRepository<Process> processRepo = processContext.GetProcessRepository();
+                float value = processRepo.SumActiveProcessByClient(clientId); 
 
-               if(value != 0 || value != 0.0)
-                    return Ok(value); 
+                if(value != 0 || value != 0.0)
+                        return Ok(value); 
 
-                return BadRequest("Processo requisitado não existe");
+                    return BadRequest("Processo requisitado não existe");
 
-            }
-            catch (System.Exception)
-            {
-                throw;
-            }
+                }
+                catch (System.Exception)
+                {
+                    throw;
+                }
         }
 
         [HttpGet("CalcAverageProcessByClient/{clientId}")]
@@ -98,7 +105,8 @@ namespace Teste_Trinks.Controllers
         {
             try
             {
-               float value = iProcessRepo.CalcAverageProcessByClient(clientId); 
+                IProcessRepository<Process> processRepo = processContext.GetProcessRepository();
+               float value = processRepo.CalcAverageProcessByClient(clientId); 
 
                if(value != 0 || value != 0.0)
                     return Ok(value); 
@@ -116,7 +124,8 @@ namespace Teste_Trinks.Controllers
         {
             try
             {
-               int value = iProcessRepo.CountProcessByMonetaryValue(clientId: request.clientId, value: request.monetaryValue); 
+                IProcessRepository<Process> processRepo = processContext.GetProcessRepository();
+               int value = processRepo.CountProcessByMonetaryValue(clientId: request.clientId, value: request.monetaryValue); 
 
                if(value != 0)
                     return Ok(value); 
@@ -135,7 +144,8 @@ namespace Teste_Trinks.Controllers
         {
             try
             {
-               Process process = iProcessRepo.GetProcessByDate(dateTime); 
+                IProcessRepository<Process> processRepo = processContext.GetProcessRepository();
+               Process process = processRepo.GetProcessByDate(dateTime); 
 
                if(process != null)
                     return Ok(process); 
@@ -154,7 +164,8 @@ namespace Teste_Trinks.Controllers
         {
             try
             {
-               List<Process> processes = iProcessRepo.GetProcessByStateClient(state); 
+                IProcessRepository<Process> processRepo = processContext.GetProcessRepository();
+               List<Process> processes = processRepo.GetProcessByStateClient(state); 
 
                if(processes != null || processes.Count > 0)
                     return Ok(processes); 
@@ -173,7 +184,8 @@ namespace Teste_Trinks.Controllers
         {
             try
             {
-               List<Process> processes = iProcessRepo.ProcessContains(acronym); 
+                IProcessRepository<Process> processRepo = processContext.GetProcessRepository();
+               List<Process> processes = processRepo.ProcessContains(acronym); 
 
                if(processes != null || processes.Count > 0)
                     return Ok(processes); 
@@ -188,13 +200,14 @@ namespace Teste_Trinks.Controllers
         }
 
         [HttpPost("Update")]
-        public IActionResult Update([FromBody] IProcess process)
+        public IActionResult Update([FromBody] Process process)
         {
             try
             {
+                IProcessRepository<Process> processRepo = processContext.GetProcessRepository();
                 if(process != null)
                 {
-                    iProcessRepo.Update(process); 
+                    processRepo.Update(process); 
                     processContext.SaveChanges();
                     return Ok();
                 }
@@ -209,13 +222,14 @@ namespace Teste_Trinks.Controllers
         }
 
         [HttpPost("Insert")]
-        public IActionResult Insert([FromBody] IProcess process)
+        public IActionResult Insert([FromBody] Process process)
         {
             try
             {
+                IProcessRepository<Process> processRepo = processContext.GetProcessRepository();
                 if(process != null)
                 {
-                    iProcessRepo.Insert(process); 
+                    processRepo.Insert(process); 
                     processContext.SaveChanges();
                     return Ok();
                 }
@@ -234,9 +248,10 @@ namespace Teste_Trinks.Controllers
         {
             try
             {
+                IProcessRepository<Process> processRepo = processContext.GetProcessRepository();
                 if(processId != 0)
                 {
-                    iProcessRepo.DeleteById(processId); 
+                    processRepo.DeleteById(processId); 
                     processContext.SaveChanges();
                     return Ok();
                 }

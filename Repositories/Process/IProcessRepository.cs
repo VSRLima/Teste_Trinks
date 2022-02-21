@@ -8,7 +8,7 @@ namespace Teste_Trinks.Repositories
     {
         float SumAllActiveProcess();
         float SumActiveProcessByClient(int clientId);
-        dynamic GetAllProcess();
+        List<ProcessWithClientName> GetAllProcess();
         Process GetById(int processId);
         float CalcAverageProcessByClient(int clientId);
         int CountProcessByMonetaryValue (double value, int clientId);

@@ -6,6 +6,5 @@ export interface IProcess
   state: string;
   monetaryValue: number;
   startDate : Date;
-  clientId: number;
-  processState: string;
+  clientName: string;
 }

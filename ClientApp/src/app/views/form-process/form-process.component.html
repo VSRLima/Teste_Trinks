@@ -1,51 +1,70 @@
 
-<mat-card class="example-card">
+<mat-card class="process-card">
   <mat-card-header>
-    <mat-card-title *ngIf="!edit">Novo Processo</mat-card-title>
-    <mat-card-title *ngIf="edit">Editar Processo</mat-card-title>
-    <!-- <mat-card-subtitle *ngIf="edit">ID: {{process.id}}</mat-card-subtitle> -->
+    <mat-card-title>{{edit ? 'Editar Processo' : 'Novo Processo'}}</mat-card-title>
+    <mat-card-subtitle *ngIf="edit">ID: {{process.id}}</mat-card-subtitle>
   </mat-card-header>
-  <mat-card-content>
+  <mat-card-content class="process-content">
     <form [formGroup]="processForm" (ngSubmit)="saveProcess()" novalidate>
+      <mat-slide-toggle formControlName="active" color="primary">Ativo</mat-slide-toggle>
       <mat-form-field appearance="fill">
         <mat-label>Número do Processo</mat-label>
-        <input matInput formControlName="processName">
-        <!-- <mat-error *ngIf="validFields('processName')">Número do Processo está inválido</mat-error> -->
+        <input matInput formControlName="processNumber">
+        <mat-error *ngIf="validFields('processNumber')">Número do Processo está inválido</mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="fill">
         <mat-label>Estado (Sigla)</mat-label>
-        <input matInput formControlName="state">
-        <!-- <mat-error *ngIf="validFields('state')">O estado digitado está inválido</mat-error> -->
+        <input matInput formControlName="state" maxlength="2">
+        <mat-error *ngIf="validFields('state')">O estado digitado está inválido</mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="fill">
         <mat-label>Valor</mat-label>
-        <input matInput formControlName="monetaryValue">
-        <!-- <mat-error *ngIf="validFields('monetaryValue')">O valor digitado está inválido</mat-error> -->
+        <input matInput formControlName="monetaryValue" type="number">
+        <mat-error *ngIf="validFields('monetaryValue')">O valor digitado está inválido</mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="fill">
-        <mat-label>startDate</mat-label>
-        <input matInput formControlName="startDate">
-        <!-- <mat-error *ngIf="validFields('startDate')">O valor digitado está inválido</mat-error> -->
+        <mat-label>Data de Início</mat-label>
+        <input matInput formControlName="startDate" type="date">
+        <mat-error *ngIf="validFields('startDate')">A data digitada está inválida</mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="fill">
-        <mat-label>clientId</mat-label>
-        <input matInput formControlName="clientId">
-        <!-- <mat-error *ngIf="validFields('clientId')">O valor digitado está inválido</mat-error> -->
-      </mat-form-field>
-
-      <mat-form-field appearance="fill">
-        <mat-label>Estado do Processo (Sigla)</mat-label>
-        <input matInput formControlName="processState">
-        <!-- <mat-error *ngIf="validFields('processState')">O estado digitado está inválido</mat-error> -->
+        <mat-label>Nome do Cliente</mat-label>
+        <mat-select [(value)]="clientId">
+          <mat-option *ngFor="let client of clients" [value]="client.id">
+            {{client.name}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="validFields('clientName')">O valor digitado está inválido</mat-error>
       </mat-form-field>
     </form>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-button>LIKE</button>
-    <button mat-button>SHARE</button>
+    <button mat-raised-button color="primary" (click)="saveProcess()">Criar</button>
+    <button mat-raised-button color="secondary" (click)="goToHome()">Cancelar e Voltar</button>
+    <button mat-raised-button color="primary" (click)="showModal()"><span class="material-icons">add</span> Adicionar Novo Cliente</button>
   </mat-card-actions>
 </mat-card>
+<div class="modal" tabindex="-1" role="dialog" *ngIf="showModalClient">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Modal body text goes here.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+

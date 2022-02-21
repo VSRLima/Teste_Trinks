@@ -5,3 +5,11 @@
 .align-center {
   text-align: center;
 }
+
+.dropdown {
+  display: inline-block;
+}
+
+.btn {
+  width: 5px;
+}

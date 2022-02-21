@@ -1,0 +1,10 @@
+.mat-form-field {
+  display: block;
+}
+
+@media (min-width: 990px) {
+  .process-card {
+    margin-left: 100px;
+    margin-right: 100px;
+  }
+}

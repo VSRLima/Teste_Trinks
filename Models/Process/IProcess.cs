@@ -11,7 +11,6 @@ namespace Teste_Trinks.Models
         float MonetaryValue { get; set; }
         DateTime StartDate { get; set;}
         int ClientId { get; set; }
-        string ProcessState { get; set; }
 
         Client Client { get; set;}
     }

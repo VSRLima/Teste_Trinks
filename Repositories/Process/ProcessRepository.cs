@@ -16,13 +16,19 @@ namespace Teste_Trinks.Repositories
 
         public ProcessRepository(ProcessContext aContext, DbSet<Process> entSet) : base(aContext, entSet) { }
 
-        public dynamic GetAllProcess() 
+        public List<ProcessWithClientName> GetAllProcess() 
         {
             try
             {
-                return context.Process
-                .Select(el => new {el.Active, el.MonetaryValue, el.ProcessNumber, el.ProcessState, el.StartDate, el.State, el.Client.Name }).ToList();
-                //;
+                return context.Process.Select(el => new ProcessWithClientName {
+                    Id = el.Id,
+                    Active = el.Active,
+                    ProcessNumber = el.ProcessNumber,
+                    State = el.State,
+                    MonetaryValue = el.MonetaryValue,
+                    StartDate = el.StartDate,
+                    ClientName = el.Client.Name,
+                }).ToList<ProcessWithClientName>();
             }
             catch (System.Exception)
             {
@@ -160,7 +166,7 @@ namespace Teste_Trinks.Repositories
             {
                 if (state != "" || state != null)
                 {
-                    List<Process> processByState = context.Process.Where(el => el.ProcessState == state && el.Client.State == state).ToList();
+                    List<Process> processByState = context.Process.Where(el => el.State == state && el.Client.State == state).ToList();
 
                     if (processByState.Count > 0)
                         return processByState;

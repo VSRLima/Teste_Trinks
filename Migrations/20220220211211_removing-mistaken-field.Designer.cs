@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Teste_Trinks.DAL;
 
 namespace Teste_Trinks.Migrations
 {
     [DbContext(typeof(ProcessContext))]
-    partial class ProcessContextModelSnapshot : ModelSnapshot
+    [Migration("20220220211211_removing-mistaken-field")]
+    partial class removingmistakenfield
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,9 +54,6 @@ namespace Teste_Trinks.Migrations
 
                     b.Property<int>("ClientId")
                         .HasColumnType("int");
-
-                    b.Property<string>("ClientName")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<float>("MonetaryValue")
                         .HasColumnType("real");
