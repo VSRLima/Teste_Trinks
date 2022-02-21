@@ -108,7 +108,7 @@ export class FormProcessComponent implements OnInit {
       this.sweetAlert.ShowAlert("Erro!", "O processo não foi criado, por gentileza tente novamente!", "error");
     },
     () => {
-      this.router.navigate([]);
+      window.history.back();
     })
   }
 
@@ -127,13 +127,13 @@ export class FormProcessComponent implements OnInit {
 
     this.processUpdateSubscription = this.processService.update(this.process).subscribe(response => {
       this.sweetAlert.ShowAlert("Sucesso!", "O processo foi atualizado com sucesso!", "success");
-      this.router.navigate(['/home']);
+      window.history.back();
     }),
     error => {
       this.sweetAlert.ShowAlert("Erro!", "O processo não foi atualizado, por gentileza tente novamente!", "error");
     },
     () => {
-      this.router.navigate(['/home']);
+      window.history.back();
     }
   }
 
